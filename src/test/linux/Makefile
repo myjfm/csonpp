@@ -8,13 +8,13 @@ REAL_CPPFLAGS		= $(OPTIMIZATION) -fPIC \
 									-I../../../3rdparty/gmock/gtest/include \
 									-I../../ \
 									$(CPPFLAGS) $(WARNINGS) $(DEBUG) $(ARCH)
-REAL_LDFLAGS		= $(LDFLAGS) $(ARCH)
+REAL_LDFLAGS		= -lpthread $(LDFLAGS) $(ARCH)
 
 export OUTPUT_PATH	= output
 
 TEST						= $(OUTPUT_PATH)/test
 OBJS						= $(OUTPUT_PATH)/TestMain.o \
-					  $(OUTPUT_PATH)/CsonppTest.o
+									$(OUTPUT_PATH)/CsonppTest.o
 
 GMOCK_LIB				= ../../../3rdparty/gmock/output/libgmock.a
 CSONPP_LIB			= ../../../output/libcsonpp.a
