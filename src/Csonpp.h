@@ -1,12 +1,15 @@
 #ifndef _CSONPP_CSONPP_H_
 #define _CSONPP_CSONPP_H_
 
+#include <assert.h>
+
 #include <stdint.h>
 #include <stddef.h>
-#include <memory>
 #include <string>
-#include <map>
 #include <vector>
+#include <map>
+#include <memory>
+#include <algorithm>
 
 #define START_CSONPP_NS namespace Csonpp {
 #define END_CSONPP_NS }
@@ -30,104 +33,37 @@ public:
   friend bool operator>=(const Object& irL, const Object& irR);
 
 public:
-  Object() {}
+  Object() = default;
+  Object(const Object& irOther) ;
+  Object(Object&& irrOther);
 
-  Object(const Object& irOther) 
-  : mValue(irOther.mValue) {
-  }
-
-  Object(Object&& irvOther) 
-  : mValue(std::move(irOther.mValue)) {
-  }
-
-  Object& operator=(const Object& irOther) {
-    if (this != &irOther)
-      mValue = irOther.mValue;
-    return *this;
-  }
-
-  Object& operator=(const Object&& irOther) {
-    if (this != &irOther)
-      mValue = std::move(irOther.mValue);
-    return *this;
-  }
+  Object& operator=(const Object& irOther);
+  Object& operator=(const Object&& irrOther);
   
   // find element matching irKey, or insert with default Value
-  Value& operator[](const std::string& irKey) {
-    return mValue[irKey];
-  }
-
+  Value& operator[](const std::string& irKey);
   // find element matching irKey, or insert with default Value
-  Value& operator[](std::string&& irKey) {
-    return mValue[std::move(irKey)];
-  }
+  Value& operator[](std::string&& irrKey);
 
-  ConstIterator CBegin() const {
-    return mValue.cbegin();
-  }
+  ConstIterator CBegin() const;
+  ConstIterator CEnd() const;
 
-  ConstIterator CEnd() const {
-    return mVlaue.cend();
-  }
+  ConstIterator Begin() const;
+  ConstIterator End() const;
 
-  ConstIterator Begin() const {
-    return mValue.begin();
-  }
-
-  ConstIterator End() const {
-    return mValue.end();
-  }
-
-  Iterator Begin() {
-    return mValue.begin();
-  }
-
-  Iterator End() {
-    return mValue.end();
-  }
+  Iterator Begin();
+  Iterator End();
   
-  Iterator Find(const std::string& irKey) {
-    return mValue.find(irKey);
-  }
-
-  ConstIterator Find(const std::string& irKey) const {
-    return mValue.find(irKey);
-  }
+  Iterator Find(const std::string& irKey);
+  ConstIterator Find(const std::string& irKey) const;
   
-  void Clear() {
-    mValue.clear();
-  }
-  size_t Size() const {
-    return mValue.size();
-  }
+  void Clear();
+
+  size_t Size() const;
   
 private:
   Map mValue;
 };
-
-bool operator==(const Object& irL, const Object& irR) {
-  return irL.mValue == irR.mValue;
-}
-
-bool operator!=(const Object& irL, const Object& irR) {
-  return !(irL.mValue == irR.mValue);
-}
-
-bool operator>(const Object& irL, const Object& irR) {
-  return irL.mValue > irR.mValue;
-}
-
-bool operator<(const Object& irL, const Object& irR) {
-  return irL.mValue < irR.mValue;
-}
-
-bool operator>=(const Object& irL, const Object& irR) {
-  return !(irL.mValue < irR.mValue);
-}
-
-bool operator<=(const Object& irL, const Object& irR) {
-  return !(irL.mValue > irR.mValue);
-}
 
 class Array {
   typedef std::vector<Value> Container;
@@ -142,464 +78,55 @@ class Array {
   friend bool operator<=(const Array& irL, const Array& irR);
   
 public:
-  Array() {}
+  Array() = default;
 
-  Array(const Array& irArray) 
-  : mValue(irArray.mValue) {
-  }
+  Array(const Array& irArray) ;
+  Array(Array&& irrArray);
 
-  Array(Array&& irArray) 
-  : mValue(std::move(irArray.mValue)) {
-  }
-
-  Array& operator=(const Array& irArray) {
-    if (this != &irArray)
-      mValue = irArray.mValue;
-    return *this;
-  }
-
-  Array& operator=(Array&& irArray) {
-    if (this != &irArray)
-      mValue = std::move(irArray.mValue);
-    return *this;
-  }
+  Array& operator=(const Array& irArray);
+  Array& operator=(Array&& irrArray);
   
   // the element must exist
-  Value& operator[](size_t iIndex) {
-    assert(iIndex < mValue.size());
-    return mValue[iIndex];
-  }
-  
+  Value& operator[](size_t iIndex);
   // the element must exist
-  const Value& operator[](size_t iIndex) const {
-    assert(iIndex < mValue.size());
-    return mValue[iIndex];
-  }
+  const Value& operator[](size_t iIndex) const;
 
-  void Append(const Value& irValue) {
-    mValue.push_back(irValue);
-  }
+  void Append(const Value& irValue);
+  void Append(Value&& irrValue);
 
-  void Append(Value&& irValue) {
-    mValue.push_back(std::move(irValue));
-  }
+  ConstIterator CBegin() const;
+  ConstIterator CEnd() const;
 
-  ConstIterator CBegin() const {
-    return mValue.cbegin();
-  }
+  ConstIterator Begin() const;
 
-  ConstIterator CEnd() const {
-    return mValue.cend();
-  }
+  ConstIterator End() const;
 
-  ConstIterator Begin() const {
-    return mValue.begin();
-  }
+  Iterator Begin();
+  Iterator End();
 
-  ConstIterator End() const {
-    return mValue.end();
-  }
+  Iterator Find(const Value& irValue);
+  ConstIterator Find(const Value& irValue) const;
 
-  Iterator Begin() {
-    return mValue.begin();
-  }
+  void Clear();
 
-  Iterator End() {
-    return mValue.end();
-  }
-
-  Iterator Find(const Value& irValue) {
-    return std::find(Begin(), End(), irValue);
-  }
-
-  ConstIterator Find(const Value& irValue) const {
-    return std::find(Begin(), End(), irValue);
-  }
-
-  void Clear() {
-    mValue.clear();
-  }
-
-  size_t Size() const {
-    return mValue.size();
-  }
+  size_t Size() const;
   
 private:
   Container mValue;
 };
 
-bool operator==(const Array& irL, const Array& irR) {
-  return irL.mValue == irR.mValue;
-}
-
-bool operator!=(const Array& irL, const Array& irR) {
-  return !(irL == irR);
-}
-
-bool operator>(const Array& irL, const Array& irR) {
-  return irL > irR;
-}
-
-bool operator<(const Array& irL, const Array& irR) {
-  return irL < irR;
-}
-
-bool operator>=(const Array& irL, const Array& irR) {
-  return !(irL < irR);
-}
-
-bool operator<=(const Array& irL, const Array& irR) {
-  return !(irL > irR);
-}
-
 class Value {
 public:
   enum class ValueType {
-    DUMMY_T = 0,   /* invalid type */
-    NULL_T = 1,    /* e.g. null */
-    BOOL_T = 2,    /* e.g. true or false */
-    DOUBLE_T = 3,  /* e.g. -10.05 */
-    INT_T = 4,     /* e.g. -10 */
-    STRING_T = 5,  /* e.g. "abcd" */
-    ARRAY_T = 6,   /* e.g. ["a", "b"] */
-    OBJECT_T = 7,  /* e.g. {"a":true} */
+    DUMMY_T   = 0,  /* invalid type */
+    NULL_T    = 1,  /* e.g. null */
+    BOOL_T    = 2,  /* e.g. true or false */
+    INTEGER_T = 3,  /* e.g. -100 */
+    DOUBLE_T  = 4,  /* e.g. -1.2e-10 */
+    STRING_T  = 5,  /* e.g. "abcd" */
+    OBJECT_T  = 6,  /* e.g. {"a":true} */
+    ARRAY_T   = 7,  /* e.g. ["a", "b"] */
   };
-
-  explicit Value(ValueType iType = ValueType::DUMMY_T) 
-  : mType(iType) {
-  }
-
-  explicit Value(std::nullptr_t iNull) 
-  : mType(ValueType::NULL_T) {
-  }
-
-	explicit Value(bool iValue) 
-  : mType(ValueType::BOOL_T), 
-    mBool(iValue) {
-  }
-
-  explicit Value(int64_t iValue) 
-  : mType(ValueType::INT_T), 
-    mInt(iValue) {
-  }
-
-	explicit Value(double iValue) 
-  : mType(ValueType::DOUBLE_T), 
-    mDouble(iValue) {
-  }
-
-	explicit Value(const char* ipValue) 
-  : mType(ValueType::STRING_T), 
-    mString(ipValue) {
-  }
-
-	explicit Value(const std::string& irValue) 
-  : mType(ValueType::STRING_T), 
-    mString(irValue) {
-  }
-
-	explicit Value(std::string&& irValue) 
-  : mType(ValueType::STRING_T), 
-    mString(std::move(irValue)) {
-  }
-
-	explicit Value(const Array& irValue) 
-  : mType(ValueType::ARRAY_T), 
-    mArray(irValue) {
-  }
-
-	explicit Value(Array&& irValue) 
-  : mType(ValueType::ARRAY_T), 
-    mArray(std::move(irValue)) {
-  }
-
-	explicit Value(const Object& irValue) 
-  : mType(ValueType::OBJECT_T), 
-    mObject(irValue) {
-  }
-
-	explicit Value(Object&& irValue) 
-  : mType(ValueType::OBJECT_T), 
-    mObject(std::move(irValue)) {
-  }
-
-  ~Value() {}
-
-	Value(const Value& irValue) 
-  : mType(irValue.mType) {
-    switch(mType) {
-    case ValueType::BOOL_T:
-      mBool = irValue.mBool;
-      break;
-    case ValueType::INT_T:
-      mInt = irValue.mInt;
-      break;
-    case ValueType::DOUBLE_T:
-      mDouble = irValue.mDouble;
-      break;
-    case ValueType::STRING_T:
-      mString = irValue.mString;
-      break;
-    case ValueType::ARRAY_T:
-      mArray = irValue.mArray;
-      break;
-    case ValueType::OBJECT_T:
-      mObject = irValue.mObject;
-      break;
-    default:
-      break;
-    }
-  }
-  
-  Value(Value&& irValue) 
-  : mType(irValue.mType) {
-    switch(mType) {
-    case ValueType::BOOL_T:
-      mBool = irValue.mBool;
-      break;
-    case ValueType::INT_T:
-      mInt = irValue.mInt;
-      break;
-    case ValueType::DOUBLE_T:
-      mDouble = irValue.mDouble;
-      break;
-    case ValueType::STRING_T:
-      mString = std::move(irValue.mString);
-      break;
-    case ValueType::ARRAY_T:
-      mArray = std::move(irValue.mArray);
-      break;
-    case ValueType::OBJECT_T:
-      mObject = std::move(irValue.mObject);
-      break;
-    default:
-      break;
-    }
-  }
-
-	Value& operator=(const Value& irValue) {
-    if (&irValue != this) {
-      mType = irValue.mType;
-      switch(mType) {
-      case ValueType::BOOL_T:
-        mBool = irValue.mBool;
-        break;
-      case ValueType::INT_T:
-        mInt = irValue.mInt;
-        break;
-      case ValueType::DOUBLE_T:
-        mDouble = irValue.mDouble;
-        break;
-      case ValueType::STRING_T:
-        mString = irValue.mString;
-        break;
-      case ValueType::ARRAY_T:
-        mArray = irValue.mArray;
-        break;
-      case ValueType::OBJECT_T:
-        mObject = irValue.mObject;
-        break;
-      default:
-        break;
-      }
-    }
-
-    return *this;
-  }
-
-	Value& operator=(Value&& irValue) {
-    if (&irValue != this) {
-      mType = irValue.mType;
-      switch(mType) {
-      case ValueType::BOOL_T:
-        mBool = irValue.mBool;
-        break;
-      case ValueType::INT_T:
-        mInt = irValue.mInt;
-        break;
-      case ValueType::DOUBLE_T:
-        mDouble = irValue.mDouble;
-        break;
-      case ValueType::STRING_T:
-        mString = std::move(irValue.mString);
-        break;
-      case ValueType::ARRAY_T:
-        mArray = std::move(irValue.mArray);
-        break;
-      case ValueType::OBJECT_T:
-        mObject = std::move(irValue.mObject);
-        break;
-      default:
-        break;
-      }
-    }
-
-    return *this;
-  }
-
-	Value& operator=(bool irBool) {
-    mType = ValueType::BOOL_T;
-    mBool = irBool;
-    return *this;
-  }
-
-	Value& operator=(int64_t irInt) {
-    mType = ValueType::INT_T;
-    mInt = irInt;
-    return *this;
-  }
-
-	Value& operator=(double irDouble) {
-    mType = ValueType::DOUBLE_T;
-    mDouble = irDouble;
-    return *this;
-  }
-
-	Value& operator=(const std::string& irString) {
-    mType = ValueType::STRING_T;
-    mString = irString;
-    return *this;
-  }
-
-	Value& operator=(std::string&& irString) {
-    mType = ValueType::STRING_T;
-    mString = std::move(irString);
-    return *this;
-  }
-
-	Value& operator=(const Object& irObject) {
-    mType = ValueType::OBJECT_T;
-    mObject = irObject;
-    return *this;
-  }
-
-	Value& operator=(Object&& irObject) {
-    mType = ValueType::OBJECT_T;
-    mObject = std::move(irObject);
-    return *this;
-  }
-
-	Value& operator=(const Array& irArray) {
-    mType = ValueType::ARRAY_T;
-    mArray = irArray;
-    return *this;
-  }
-
-	Value& operator=(Array&& irArray) {
-    mType = ValueType::ARRAY_T;
-    mArray = std::move(irArray);
-    return *this;
-  }
-
-  void Append(const Value& irValue) {
-    assert(mType == ValueType::ARRAY_T);
-    mArray.push_back(irValue);
-  }
-
-  void Append(Value&& irValue) {
-    assert(mType == ValueType::ARRAY_T);
-    mArray.push_back(std::move(irValue));
-  }
-
-  void Append(const std::string& irKey, bool iValue) {
-    assert(mType == ValueType::OBJECT_T);
-    mObject[irKey] = iValue;
-  }
-
-  void Append(std::string&& irKey, bool iValue) {
-    assert(mType == ValueType::OBJECT_T);
-    mObject[std::move(irKey)] = iValue;
-  }
-
-  void Append(const std::string& irKey, int64_t iValue) {
-    assert(mType == ValueType::OBJECT_T);
-    mObject[irKey] = iValue;
-  }
-
-  void Append(std::string&& irKey, int64_t iValue) {
-    assert(mType == ValueType::OBJECT_T);
-    mObject[std::move(irKey)] = iValue;
-  }
-
-  void Append(const std::string& irKey, double iValue) {
-    assert(mType == ValueType::OBJECT_T);
-    mObject[irKey] = iValue;
-  }
-
-  void Append(std::string&& irKey, double iValue) {
-    assert(mType == ValueType::OBJECT_T);
-    mObject[std::move(irKey)] = iValue;
-  }
-
-  void Append(const std::string& irKey, const char* ipValue) {
-    assert(mType == ValueType::OBJECT_T);
-    mObject[irKey] = iValue;
-  }
-
-  void Append(std::string&& irKey, const char* ipValue) {
-    assert(mType == ValueType::OBJECT_T);
-    mObject[std::move(irKey)] = iValue;
-  }
-
-  void Append(const std::string& irKey, const std::string& irValue) {
-    assert(mType == ValueType::OBJECT_T);
-    mObject[irKey] = iValue;
-  }
-
-  void Append(std::string&& irKey, const std::string& irValue) {
-    assert(mType == ValueType::OBJECT_T);
-    mObject[std::move(irKey)] = iValue;
-  }
-
-  void Append(const std::string& irKey, std::string&& irValue) {
-    assert(mType == ValueType::OBJECT_T);
-    mObject[irKey] = std::move(iValue);
-  }
-
-  void Append(std::string&& irKey, std::string&& irValue) {
-    assert(mType == ValueType::OBJECT_T);
-    mObject[std::move(irKey)] = std::move(iValue);
-  }
-
-  void Append(const std::string& irKey, const Object& irValue) {
-    assert(mType == ValueType::OBJECT_T);
-    mObject[irKey] = iValue;
-  }
-
-  void Append(std::string&& irKey, const Object& irValue) {
-    assert(mType == ValueType::OBJECT_T);
-    mObject[std::move(irKey)] = iValue;
-  }
-
-  void Append(const std::string& irKey, Object&& irValue) {
-    assert(mType == ValueType::OBJECT_T);
-    mObject[irKey] = std::move(iValue);
-  }
-
-  void Append(std::string&& irKey, Object&& irValue) {
-    assert(mType == ValueType::OBJECT_T);
-    mObject[std::move(irKey)] = std::move(iValue);
-  }
-
-  void Append(const std::string& irKey, const Array& irValue) {
-    assert(mType == ValueType::OBJECT_T);
-    mObject[irKey] = iValue;
-  }
-
-  void Append(std::string&& irKey, const Array& irValue) {
-    assert(mType == ValueType::OBJECT_T);
-    mObject[std::move(irKey)] = iValue;
-  }
-
-  void Append(const std::string& irKey, Array&& irValue) {
-    assert(mType == ValueType::OBJECT_T);
-    mObject[irKey] = std::move(iValue);
-  }
-
-  void Append(std::string&& irKey, Array&& irValue) {
-    assert(mType == ValueType::OBJECT_T);
-    mObject[std::move(irKey)] = std::move(iValue);
-  }
 
   friend bool operator==(const Value& irL, const Value& irR);
   friend bool operator!=(const Value& irL, const Value& irR);
@@ -608,198 +135,143 @@ public:
   friend bool operator<=(const Value& irL, const Value& irR);
   friend bool operator>=(const Value& irL, const Value& irR);
 
-	ValueType Type() const {
-    return mType;
-  }
+  explicit Value(ValueType iType = ValueType::DUMMY_T);
+  explicit Value(std::nullptr_t iNull);
+	explicit Value(bool iValue);
+	explicit Value(int8_t iValue);
+	explicit Value(uint8_t iValue);
+	explicit Value(int16_t iValue);
+	explicit Value(uint16_t iValue);
+	explicit Value(int32_t iValue);
+	explicit Value(uint32_t iValue);
+	explicit Value(int64_t iValue);
+  // TODO
+  // do not support uint64_t
+#if 0
+	explicit Value(uint64_t iValue);
+#endif
+	explicit Value(float iValue);
+	explicit Value(double iValue);
+	explicit Value(const std::string& irValue);
+	explicit Value(std::string&& irrValue);
+	explicit Value(const Object& irValue);
+	explicit Value(Object&& irrValue);
+	explicit Value(const Array& irValue);
+	explicit Value(Array&& irrValue);
 
-  size_t Size() const {
-    assert(mType == ValueType::OBJECT_T || mType == ValueType::ARRAY_T);
-    return (mType == ValueType::OBJECT_T) ? mObject.Size() : mArray.Size();
-  }
+  ~Value() {}
 
-  void Clear() {
-    switch (mType) {
-    case ValueType::ARRAY_T:
-      mArray.Clear();
-      return;
-    case ValueType::OBJECT_T:
-      mObject.Clear();
-      return;
-    default:
-      assert(false);
-      return;
-    }
-  }
+	Value(const Value& irValue);
+  Value(Value&& irrValue);
 
-  bool IsNumeric() const {
-    return (mType == ValueType::DOUBLE_T || mType == ValueType::INT_T);
-  }
+	Value& operator=(const Value& irValue);
+	Value& operator=(Value&& irrValue);
+	Value& operator=(bool irBool);
+	Value& operator=(int8_t irInt);
+	Value& operator=(uint8_t irInt);
+	Value& operator=(int16_t irInt);
+	Value& operator=(uint16_t irInt);
+	Value& operator=(int32_t irInt);
+	Value& operator=(uint32_t irInt);
+	Value& operator=(int64_t irInt);
+  // TODO
+  // do not support uint64_t
+#if 0
+	Value& operator=(uint64_t irInt);
+#endif
+	Value& operator=(float irDouble);
+	Value& operator=(double irDouble);
+	Value& operator=(const std::string& irString);
+	Value& operator=(std::string&& irrString);
+	Value& operator=(const Object& irObject);
+	Value& operator=(Object&& irrObject);
+	Value& operator=(const Array& irArray);
+	Value& operator=(Array&& irrArray);
 
-  bool IsIntegral() const {
-    return mType == ValueType::INT_T;
-  }
+  void Append(const Value& irValue);
+  void Append(Value&& irrValue);
+  void Append(const std::string& irKey, bool iValue);
+  void Append(std::string&& irrKey, bool iValue);
+  void Append(const std::string& irKey, int8_t iValue);
+  void Append(std::string&& irrKey, int8_t iValue);
+  void Append(const std::string& irKey, uint8_t iValue);
+  void Append(std::string&& irrKey, uint8_t iValue);
+  void Append(const std::string& irKey, int16_t iValue);
+  void Append(std::string&& irrKey, uint16_t iValue);
+  void Append(const std::string& irKey, int32_t iValue);
+  void Append(std::string&& irrKey, int32_t iValue);
+  void Append(const std::string& irKey, uint32_t iValue);
+  void Append(std::string&& irrKey, uint32_t iValue);
+  void Append(const std::string& irKey, int64_t iValue);
+  void Append(std::string&& irrKey, int64_t iValue);
+  // TODO
+  // do not support uint64_t
+#if 0
+  void Append(const std::string& irKey, uint64_t iValue);
+  void Append(std::string&& irrKey, uint64_t iValue);
+#endif
+  void Append(const std::string& irKey, float iValue);
+  void Append(std::string&& irrKey, float iValue);
+  void Append(const std::string& irKey, double iValue);
+  void Append(std::string&& irrKey, double iValue);
+  void Append(const std::string& irKey, const std::string& irValue);
+  void Append(std::string&& irrKey, const std::string& irValue);
+  void Append(const std::string& irKey, std::string&& irrValue);
+  void Append(std::string&& irrKey, std::string&& irrValue);
+  void Append(const std::string& irKey, const Object& irValue);
+  void Append(std::string&& irrKey, const Object& irValue);
+  void Append(const std::string& irKey, Object&& irrValue);
+  void Append(std::string&& irrKey, Object&& irrValue);
+  void Append(const std::string& irKey, const Array& irValue);
+  void Append(std::string&& irrKey, const Array& irValue);
+  void Append(const std::string& irKey, Array&& irrValue);
+  void Append(std::string&& irrKey, Array&& irrValue);
 
-  bool IsBool() const {
-    return mType == ValueType::BOOL_T;
-  }
+	ValueType Type() const;
 
-  bool IsString() const {
-    return mType == ValueType::STRING_T;
-  }
+  size_t Size() const;
 
-  bool IsObject() const {
-    return mType == ValueType::OBJECT_T;
-  }
+  void Clear();
 
-  bool IsArray() const {
-    return mType == ValueType::ARRAY_T;
-  }
+  bool IsNumeric() const;
+  bool IsIntegral() const;
+  bool IsDouble() const;
+  bool IsBool() const;
+  bool IsString() const;
+  bool IsObject() const;
+  bool IsArray() const;
 
-  int64_t AsInteger() const {
-    if (mType == ValueType::INT_T) {
-      return mInt;
-    } else if (mType == ValueType::DOUBLE_T) {
-      return static_cast<int64_t>(mDouble);
-    } else {
-      assert(false);
-    }
-  }
+  int64_t AsInteger() const;
+  double AsDouble() const;
+  bool AsBool() const;
+  std::string AsString() const;
+  Object AsObject() const;
+  Array AsArray() const;
 
-  double AsDouble() const {
-    if (mType == ValueType::INT_T) {
-      return static_cast<double>(mInt);
-    } else if (mType == ValueType::DOUBLE_T) {
-      return mDouble;
-    } else {
-      assert(false);
-    }
-  }
+  const int64_t& GetInteger() const;
+  const double& GetDouble() const;
+  const bool& GetBool() const;
+  const std::string& GetString() const;
+  const Object& GetObject() const;
+  const Array& GetArray() const;
 
-  bool AsBool() const {
-    assert(mType == ValueType::BOOL_T);
-    return mBool;
-  }
-
-  std::string AsString() const {
-    assert(mType == ValueType::STRING_T);
-    return mString;
-  }
-
-  Object AsObject() const {
-    assert(mType == ValueType::OBJECT_T);
-    return mObject;
-  }
-
-  Array AsArray() const {
-    assert(mType == ValueType::ARRAY_T);
-    return mArray;
-  }
-
-  Value& operator[](size_t iIndex) {
-    assert(mType == ValueType::ARRAY_T);
-    assert(iIndex < mArray.size());
-    return mArray[iIndex];
-  }
-
-  const Value& operator[](size_t iIndex) const {
-    assert(mType == ValueType::ARRAY_T);
-    assert(iIndex < mArray.size());
-    return mArray[iIndex];
-  }
-
-  Value& operator[](const std::string& irKey) {
-    assert(mType == ValueType::OBJECT_T);
-    return mObject[irKey];
-  }
-
-  Value& operator[](std::string&& irKey) {
-    assert(mType == ValueType::OBJECT_T);
-    return mObject[std::move(irKey)];
-  }
+  Value& operator[](size_t iIndex);
+  const Value& operator[](size_t iIndex) const;
+  Value& operator[](const std::string& irKey);
+  Value& operator[](std::string&& irrKey);
   
 private:
   ValueType mType;
 
   union {
     bool mBool;
-    int64_t mInt;
+    int64_t mInteger;
     double mDouble;
   };
   std::string mString;
   Array mArray;
   Object mObject;
 };
-
-bool operator==(const Value& irL, const Value& irR) {
-  if (irL.mType != irR.mType && (!irL.IsNumeric() || !irR.IsNumeric()))
-    return false;
-
-  switch (irL.mType) {
-  case Value::ValueType::BOOL_T:
-    return irL.mBool == irR.mBool;
-  case Value::ValueType::INT_T:
-    if (irR.mType == Value::ValueType::DOUBLE_T) {
-      return (static_cast<double>(irL.mInt) - irR.mDouble) < 1e-8;
-    } else if (irR.mType == Value::ValueType::INT_T) {
-      return irL.mInt == irR.mInt;
-    } else {
-      return false;
-    }
-  case Value::ValueType::DOUBLE_T:
-    if (irR.mType == Value::ValueType::DOUBLE_T) {
-      return (irL.mDouble - irR.mDouble) < 1e-8;
-    } else if (irR.mType == Value::ValueType::INT_T) {
-      return (irL.mDouble - static_cast<double>(irR.mInt)) < 1e-8;
-    } else {
-      return false;
-    }
-  case Value::ValueType::STRING_T:
-    return irL.mString == irR.mString;
-  case Value::ValueType::OBJECT_T:
-    return irL.mObject == irR.mObject;
-  case Value::ValueType::ARRAY_T:
-    return irL.mArray == irR.mArray;
-  default: // NullT or DummyT
-    return true;
-  }
-}
-
-bool operator!=(const Value& irL, const Value& irR) {
-  return !(irL == irR);
-}
-
-bool operator<(const Value& irL, const Value& irR) {
-  if (irL.IsIntegral() && irR.IsIntegral()) {
-    return irL.mInt < irR.mInt;
-  } else if (irL.IsIntegral() && irR.IsDouble()) {
-    return static_cast<double>(irL.mInt) < irR.mDouble;
-  } else if (irL.IsDouble() && irR.IsIntegral()) {
-    return irL.mDouble < static_cast<double>(irR.mInt);
-  } else if (irL.IsDouble() && irR.IsDouble()) {
-    return irL.mDouble < irR.mDouble;
-  } else if (irL.IsString() && irR.IsString()) {
-    return irL.mString < irR.mString;
-  } else if (irL.IsObject() && irR.IsObject()) {
-    return irL.mObject < irR.mObject;
-  } else if (irL.IsArray() && irR.IsArray()) {
-    return irL.mArray < irR.mArray;
-  } else {
-    assert(false);
-  }
-  return false;
-}
-
-bool operator>(const Value& irL, const Value& irR) {
-  return irR < irL;
-}
-
-bool operator<=(const Value& irL, const Value& irR) {
-  return !(irL > irR);
-}
-
-bool operator>=(const Value& irL, const Value& irR) {
-  return !(irL < irR);
-}
 
 class Parser {
 public:
