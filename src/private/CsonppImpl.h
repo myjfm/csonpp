@@ -4,6 +4,7 @@
 #include "../Csonpp.h"
 
 #include <cstdio>
+#include <cstring>
 #include <map>
 #include <vector>
 
@@ -177,6 +178,9 @@ std::string Number2Str<double>(double iNum) {
   return lBuf;
 }
 
+// TODO
+// do not support long double
+#if 0
 template<>
 std::string Number2Str<long double>(long double iNum) {
   char lBuf[128];
@@ -204,6 +208,7 @@ std::string Number2Str<long double>(long double iNum) {
   }
   return lBuf;
 }
+#endif
 
 template<class T>
 T Str2Number(const std::string& irStr, bool* isValid = nullptr) {
