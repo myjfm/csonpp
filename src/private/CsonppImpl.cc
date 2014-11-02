@@ -920,19 +920,19 @@ static std::string CodePoint2Utf8(int32_t iUnicodeCodePoint) {
     return lResult;
   
   if (iUnicodeCodePoint <= 0x7F) {
-    lResult.resize(1);
+    lResult.reserve(2);
     lResult.append(1, static_cast<char>(iUnicodeCodePoint));
   } else if (iUnicodeCodePoint <= 0x7FF) {
-    lResult.resize(2);
+    lResult.reserve(3);
     lResult.append(1, static_cast<char>(0xC0 | (iUnicodeCodePoint >> 6)));
     lResult.append(1, static_cast<char>(0x80 | (iUnicodeCodePoint & 0x3F)));
   } else if (iUnicodeCodePoint <= 0xFFFF) {
-    lResult.resize(3);
+    lResult.reserve(4);
     lResult.append(1, static_cast<char>(0xE0 | (iUnicodeCodePoint >> 12)));
     lResult.append(1, static_cast<char>(0x80 | ((iUnicodeCodePoint >> 6) & 0x3F)));
     lResult.append(1, static_cast<char>(0x80 | (iUnicodeCodePoint & 0x3F)));
   } else if (iUnicodeCodePoint <= 0x10FFFF) {
-    lResult.resize(4);
+    lResult.reserve(5);
     lResult.append(1, static_cast<char>(0xF0 | (iUnicodeCodePoint >> 18)));
     lResult.append(1, static_cast<char>(0x80 | ((iUnicodeCodePoint >> 12) & 0x3F)));
     lResult.append(1, static_cast<char>(0x80 | ((iUnicodeCodePoint >> 6) & 0x3F)));
@@ -1157,7 +1157,7 @@ Token TokenizerImpl::GetToken() {
         lToken.mType = Token::Type::INTEGER_T;
         break;
       case '1': case '2': case '3': case '4':
-      case '5': case '6': case '7': case '8':
+      case '5': case '6': case '7': case '8': case '9':
         lState = DFAState::NUMBER_2;
         lToken.mValue.append(1, static_cast<char>(c));
         lToken.mType = Token::Type::INTEGER_T;
@@ -1211,29 +1211,33 @@ Token TokenizerImpl::GetToken() {
         lToken.mValue.append(1, static_cast<char>(c));
         c = GetNextChar();
       }
-      if (c == ',' || c == '}' || c == ']') {
+      if (c == '\0' || c == ',' || c == '}' || c == ']') {
         UngetNextChar();
         return lToken;
       } else if (c == 'e' || c == 'E') {
-        lToken.mValue.append(1, static_cast<char>(c));
         lState = DFAState::NUMBER_5;
-      } else if (c == '.') {
         lToken.mValue.append(1, static_cast<char>(c));
+        lToken.mType = Token::Type::DOUBLE_T;
+      } else if (c == '.') {
         lState = DFAState::NUMBER_4;
+        lToken.mValue.append(1, static_cast<char>(c));
+        lToken.mType = Token::Type::DOUBLE_T;
       } else {
         return lErrorOccured();
       }
       break;
     case DFAState::NUMBER_3:
-      if (c == ',' || c == '}' || c == ']') {
+      if (c == '\0' || c == ',' || c == '}' || c == ']') {
         UngetNextChar();
         return lToken;
       } else if (c == 'e' || c == 'E') {
-        lToken.mValue.append(1, static_cast<char>(c));
         lState = DFAState::NUMBER_5;
-      } else if (c == '.') {
         lToken.mValue.append(1, static_cast<char>(c));
+        lToken.mType = Token::Type::DOUBLE_T;
+      } else if (c == '.') {
         lState = DFAState::NUMBER_4;
+        lToken.mValue.append(1, static_cast<char>(c));
+        lToken.mType = Token::Type::DOUBLE_T;
       } else {
         return lErrorOccured();
       }
@@ -1243,7 +1247,7 @@ Token TokenizerImpl::GetToken() {
         lToken.mValue.append(1, static_cast<char>(c));
         c = GetNextChar();
       }
-      if (c == ',' || c == '}' || c == ']') {
+      if (c == '\0' || c == ',' || c == '}' || c == ']') {
         UngetNextChar();
         return lToken;
       } else if (c == 'e' || c == 'E') {
@@ -1277,7 +1281,7 @@ Token TokenizerImpl::GetToken() {
         lToken.mValue.append(1, static_cast<char>(c));
         c = GetNextChar();
       }
-      if (c == ',' || c == '}' || c == ']') {
+      if (c == '\0' || c == ',' || c == '}' || c == ']') {
         UngetNextChar();
         return lToken;
       } else {
@@ -1343,10 +1347,10 @@ void ParserImpl::Serialize(const Value& irValue,
     orCsonppString = irValue.AsBool() ? "true" : "false";
     break;
   case Value::ValueType::INTEGER_T:
-    orCsonppString = std::to_string(irValue.GetInteger());
+    orCsonppString = Number2Str<int64_t>(irValue.GetInteger());
     break;
   case Value::ValueType::DOUBLE_T:
-    orCsonppString = std::to_string(irValue.GetDouble());
+    orCsonppString = Number2Str<double>(irValue.GetDouble());
     break;
   case Value::ValueType::STRING_T:
     orCsonppString.append(hSerializeString(irValue.GetString()));
@@ -1406,7 +1410,7 @@ std::string ParserImpl::hSerializeString(const std::string& irUtf8String) const 
   };
 
   std::string lResult("\"");
-  lResult.resize(irUtf8String.size() * 2);
+  lResult.reserve(irUtf8String.size() * 2);
   const char* lpChar = irUtf8String.c_str();
   while (*lpChar) {
     int32_t lCodePoint = Utf82CodePoint(lpChar);

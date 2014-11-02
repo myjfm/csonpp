@@ -11,12 +11,12 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{85772D61-9C75-4966-928A-4AB98A302627}</ProjectGuid>
-    <RootNamespace>gmock</RootNamespace>
+    <ProjectGuid>{0992D9CE-9FC4-4009-82A5-00785ADD6998}</ProjectGuid>
+    <RootNamespace>csonpptest</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v120</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
@@ -39,20 +39,19 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <OutDir>$(ProjectDir)..\output</OutDir>
+    <OutDir>$(ProjectDir)..\..\output</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\gtest\include\;$(ProjectDir)..\include\;$(ProjectDir)..\gtest\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;_UNICODE;UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\;$(ProjectDir)..\..\..\..\3rdparty\gmock\include;$(ProjectDir)..\..\..\..\3rdparty\gmock\gtest\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <ModuleDefinitionFile>
-      </ModuleDefinitionFile>
+      <AdditionalDependencies>$(ProjectDir)..\..\..\..\output\csonpp.lib;$(ProjectDir)..\..\..\..\3rdparty\gmock\output\gmock.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <SubSystem>Console</SubSystem>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -67,25 +66,11 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <ModuleDefinitionFile>Source.def</ModuleDefinitionFile>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\gtest\src\gtest-death-test.cc" />
-    <ClCompile Include="..\gtest\src\gtest-filepath.cc" />
-    <ClCompile Include="..\gtest\src\gtest-port.cc" />
-    <ClCompile Include="..\gtest\src\gtest-printers.cc" />
-    <ClCompile Include="..\gtest\src\gtest-test-part.cc" />
-    <ClCompile Include="..\gtest\src\gtest-typed-test.cc" />
-    <ClCompile Include="..\gtest\src\gtest.cc" />
-    <ClCompile Include="..\src\gmock-cardinalities.cc" />
-    <ClCompile Include="..\src\gmock-internal-utils.cc" />
-    <ClCompile Include="..\src\gmock-matchers.cc" />
-    <ClCompile Include="..\src\gmock-spec-builders.cc" />
-    <ClCompile Include="..\src\gmock.cc" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\gtest\src\gtest-internal-inl.h" />
+    <ClCompile Include="..\..\CsonppTest.cc" />
+    <ClCompile Include="..\..\TestMain.cc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

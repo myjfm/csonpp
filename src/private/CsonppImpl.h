@@ -3,6 +3,7 @@
 
 #include "../Csonpp.h"
 
+#include <cstdio>
 #include <map>
 #include <vector>
 
@@ -114,6 +115,95 @@ private:
   std::string hSerializeArray(const Value& irValue) const;
   std::string hSerializeString(const std::string& irUtf8String) const;
 };
+
+template<class T>
+std::string Number2Str(T iNum) {
+  return std::to_string(iNum);
+}
+
+template<>
+std::string Number2Str<float>(float iNum) {
+  char lBuf[32];
+#if defined(_MSC_VER) && defined(__STDC_SECURE_LIB__)
+  sprintf_s(lBuf, 32, "%#.8g", iNum);
+#else
+  std::sprintf(lBuf, "%#.8g", iNum);
+#endif
+  char* lpTail = lBuf + strlen(lBuf) - 1;
+  if (*lpTail != '0') return lBuf;
+  while (lpTail > lBuf && *lpTail == '0') {
+    --lpTail;
+  }
+  char* lLastNonZero = lpTail;
+  while (lpTail >= lBuf) {
+    switch (*lpTail) {
+    case '0': case '1': case '2': case '3': case '4':
+    case '5': case '6': case '7': case '8': case '9':
+      --lpTail;
+      break;
+    case '.':
+      *(lLastNonZero + 2) = '\0';
+      return lBuf;
+    }
+  }
+  return lBuf;
+}
+
+template<>
+std::string Number2Str<double>(double iNum) {
+  char lBuf[64];
+#if defined(_MSC_VER) && defined(__STDC_SECURE_LIB__)
+  sprintf_s(lBuf, 64, "%#.16g", iNum);
+#else
+  std::sprintf(lBuf, "%#.16g", iNum);
+#endif
+  char* lpTail = lBuf + strlen(lBuf) - 1;
+  if (*lpTail != '0') return lBuf;
+  while (lpTail > lBuf && *lpTail == '0') {
+    --lpTail;
+  }
+  char* lLastNonZero = lpTail;
+  while (lpTail >= lBuf) {
+    switch (*lpTail) {
+    case '0': case '1': case '2': case '3': case '4':
+    case '5': case '6': case '7': case '8': case '9':
+      --lpTail;
+      break;
+    case '.':
+      *(lLastNonZero + 2) = '\0';
+      return lBuf;
+    }
+  }
+  return lBuf;
+}
+
+template<>
+std::string Number2Str<long double>(long double iNum) {
+  char lBuf[128];
+#if defined(_MSC_VER) && defined(__STDC_SECURE_LIB__)
+  sprintf_s(lBuf, 128, "%#.32g", iNum);
+#else
+  std::sprintf(lBuf, "%#.32g", iNum);
+#endif
+  char* lpTail = lBuf + strlen(lBuf) - 1;
+  if (*lpTail != '0') return lBuf;
+  while (lpTail > lBuf && *lpTail == '0') {
+    --lpTail;
+  }
+  char* lLastNonZero = lpTail;
+  while (lpTail >= lBuf) {
+    switch (*lpTail) {
+    case '0': case '1': case '2': case '3': case '4':
+    case '5': case '6': case '7': case '8': case '9':
+      --lpTail;
+      break;
+    case '.':
+      *(lLastNonZero + 2) = '\0';
+      return lBuf;
+    }
+  }
+  return lBuf;
+}
 
 template<class T>
 T Str2Number(const std::string& irStr, bool* isValid = nullptr) {
@@ -325,18 +415,19 @@ uint64_t Str2Number<uint64_t>(const std::string& irStr, bool* ipIsValid) {
 template<>
 float Str2Number<float>(const std::string& irStr, bool* ipIsValid) {
   float lResult = 0.;
+  bool lIsValid = true;
   try {
     lResult = std::stof(irStr);
   } catch (std::invalid_argument&) {
-    if (ipIsValid) {
-      *ipIsValid = false;
-    }
+    lIsValid = false;
     lResult = 0.;
   } catch (std::out_of_range) {
-    if (ipIsValid) {
-      *ipIsValid = false;
-    }
+    lIsValid = false;
     lResult = 0.;
+  }
+
+  if (ipIsValid) {
+    *ipIsValid = lIsValid;
   }
 
   return lResult;
@@ -345,18 +436,19 @@ float Str2Number<float>(const std::string& irStr, bool* ipIsValid) {
 template<>
 double Str2Number<double>(const std::string& irStr, bool* ipIsValid) {
   double lResult = 0.;
+  bool lIsValid = true;
   try {
     lResult = std::stod(irStr);
   } catch (std::invalid_argument&) {
-    if (ipIsValid) {
-      *ipIsValid = false;
-    }
+    lIsValid = false;
     lResult = 0.;
   } catch (std::out_of_range) {
-    if (ipIsValid) {
-      *ipIsValid = false;
-    }
+    lIsValid = false;
     lResult = 0.;
+  }
+
+  if (ipIsValid) {
+    *ipIsValid = lIsValid;
   }
 
   return lResult;
@@ -365,18 +457,19 @@ double Str2Number<double>(const std::string& irStr, bool* ipIsValid) {
 template<>
 long double Str2Number<long double>(const std::string& irStr, bool* ipIsValid) {
   long double lResult = 0.;
+  bool lIsValid = true;
   try {
     lResult = std::stold(irStr);
   } catch (std::invalid_argument&) {
-    if (ipIsValid) {
-      *ipIsValid = false;
-    }
+    lIsValid = false;
     lResult = 0.;
   } catch (std::out_of_range) {
-    if (ipIsValid) {
-      *ipIsValid = false;
-    }
+    lIsValid = false;
     lResult = 0.;
+  }
+
+  if (ipIsValid) {
+    *ipIsValid = lIsValid;
   }
 
   return lResult;
@@ -385,4 +478,3 @@ long double Str2Number<long double>(const std::string& irStr, bool* ipIsValid) {
 END_CSONPP_NS
 
 #endif
-

@@ -118,7 +118,7 @@ TEST(CsonppTest, Serialize) {
   CSONPP::Value lValue2 = CSONPP::Parser::Deserialize(lStr2);
   ASSERT_EQ(lValue2.Type(), CSONPP::Value::ValueType::DOUBLE_T);
   ASSERT_DOUBLE_EQ(lValue2.AsDouble(), -0.012);
-  ASSERT_EQ(CSONPP::Parser::Serialize(lValue2), "-0.012");
+  ASSERT_EQ(CSONPP::Parser::Serialize(lValue2), "-0.0120");
 
   std::string lStr3 = "1234567";
   CSONPP::Value lValue3 = CSONPP::Parser::Deserialize(lStr3);
@@ -130,20 +130,20 @@ TEST(CsonppTest, Serialize) {
   CSONPP::Value lValue4 = CSONPP::Parser::Deserialize(lStr4);
   ASSERT_EQ(lValue4.Type(), CSONPP::Value::ValueType::DOUBLE_T);
   ASSERT_DOUBLE_EQ(lValue4.AsDouble(), -1234567.50);
-  ASSERT_EQ(CSONPP::Parser::Serialize(lValue4), "-1234567.5");
+  ASSERT_EQ(CSONPP::Parser::Serialize(lValue4), "-1234567.50");
 
   std::string lStr5 = "{\"a\":   \t-1234567.50}";
   CSONPP::Value lValue5 = CSONPP::Parser::Deserialize(lStr5);
   ASSERT_EQ(lValue5.Type(), CSONPP::Value::ValueType::OBJECT_T);
-  ASSERT_EQ(CSONPP::Parser::Serialize(lValue5), "{\"a\":-1234567.5}");
+  ASSERT_EQ(CSONPP::Parser::Serialize(lValue5), "{\"a\":-1234567.50}");
 
   std::string lStr6("[3.1456, 1., 2, \"a\\u0062\", { \"a\\u5066a\" : { \"12\\uD800\\uDC00\" :   \t1.2e-2}\t}, true, false, null]");
   CSONPP::Value lValue6 = CSONPP::Parser::Deserialize(lStr6);
-  ASSERT_EQ(CSONPP::Parser::Serialize(lValue6), "[3.1456,1,2,\"ab\",{\"a\\u5066a\":{\"12\\uD800\\uDC00\":0.012}},true,false,null]");
+  ASSERT_EQ(CSONPP::Parser::Serialize(lValue6), "[3.14560,1.0,2,\"ab\",{\"a\\u5066a\":{\"12\\uD800\\uDC00\":0.0120}},true,false,null]");
 
   std::string lStr7("[12,false, false  , null , [12e4,32, [], \"12\"]]");
   CSONPP::Value lValue7 = CSONPP::Parser::Deserialize(lStr7);
   std::string aa = CSONPP::Parser::Serialize(lValue7);
-  ASSERT_EQ(CSONPP::Parser::Serialize(lValue7), "[12,false,false,null,[120000,32,[],\"12\"]]");
+  ASSERT_EQ(CSONPP::Parser::Serialize(lValue7), "[12,false,false,null,[120000.0,32,[],\"12\"]]");
 }
 

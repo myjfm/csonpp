@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gmock", "..\..\3rdparty\gmock\vs2013\gmock.vcxproj", "{85772D61-9C75-4966-928A-4AB98A302627}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "csonpp", "csonpp.vcxproj", "{706E8972-9B12-465D-876D-CD3C0F94C4A3}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "csonpptest", "..\..\src\test\vs2013\csonpptest\csonpptest.vcxproj", "{0992D9CE-9FC4-4009-82A5-00785ADD6998}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{85772D61-9C75-4966-928A-4AB98A302627}.Debug|Win32.ActiveCfg = Debug|Win32
+		{85772D61-9C75-4966-928A-4AB98A302627}.Debug|Win32.Build.0 = Debug|Win32
+		{85772D61-9C75-4966-928A-4AB98A302627}.Release|Win32.ActiveCfg = Release|Win32
+		{85772D61-9C75-4966-928A-4AB98A302627}.Release|Win32.Build.0 = Release|Win32
+		{706E8972-9B12-465D-876D-CD3C0F94C4A3}.Debug|Win32.ActiveCfg = Debug|Win32
+		{706E8972-9B12-465D-876D-CD3C0F94C4A3}.Debug|Win32.Build.0 = Debug|Win32
+		{706E8972-9B12-465D-876D-CD3C0F94C4A3}.Release|Win32.ActiveCfg = Release|Win32
+		{706E8972-9B12-465D-876D-CD3C0F94C4A3}.Release|Win32.Build.0 = Release|Win32
+		{0992D9CE-9FC4-4009-82A5-00785ADD6998}.Debug|Win32.ActiveCfg = Debug|Win32
+		{0992D9CE-9FC4-4009-82A5-00785ADD6998}.Debug|Win32.Build.0 = Debug|Win32
+		{0992D9CE-9FC4-4009-82A5-00785ADD6998}.Release|Win32.ActiveCfg = Release|Win32
+		{0992D9CE-9FC4-4009-82A5-00785ADD6998}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
