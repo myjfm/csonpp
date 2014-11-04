@@ -19,7 +19,7 @@ Object& Object::operator=(const Object& irOther) {
   return *this;
 }
 
-Object& Object::operator=(const Object&& irrOther) {
+Object& Object::operator=(Object&& irrOther) {
   if (this != &irrOther)
     mValue = std::move(irrOther.mValue);
   return *this;
