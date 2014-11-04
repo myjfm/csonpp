@@ -212,7 +212,9 @@ std::string Number2Str<long double>(long double iNum) {
 
 template<class T>
 T Str2Number(const std::string& irStr, bool* isValid = nullptr) {
-  isValid = false;
+  if (isValid) {
+	*isValid = false;
+  }
   T res = 0;
   return res;
 }
