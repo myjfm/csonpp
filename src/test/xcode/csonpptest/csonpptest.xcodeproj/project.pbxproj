@@ -1,0 +1,326 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		691BDF251A08C5DC0003A389 /* CsonppTest.cc in Sources */ = {isa = PBXBuildFile; fileRef = 691BDF231A08C5DC0003A389 /* CsonppTest.cc */; };
+		691BDF261A08C5DC0003A389 /* TestMain.cc in Sources */ = {isa = PBXBuildFile; fileRef = 691BDF241A08C5DC0003A389 /* TestMain.cc */; };
+		691BDF331A08C6A10003A389 /* libcsonpp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6945D9601A08C4F40040DAE1 /* libcsonpp.a */; };
+		691BDF341A08C6A10003A389 /* libgmock.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6945D95A1A08C4E20040DAE1 /* libgmock.a */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		6945D9591A08C4E20040DAE1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6945D9551A08C4E10040DAE1 /* gmock.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 69464D1B19C7DC4D00CB4A64;
+			remoteInfo = gmock;
+		};
+		6945D95F1A08C4F40040DAE1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6945D95B1A08C4F40040DAE1 /* csonpp.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 6945D9261A08C0AD0040DAE1;
+			remoteInfo = csonpp;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		6945D9431A08C40A0040DAE1 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		691BDF231A08C5DC0003A389 /* CsonppTest.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CsonppTest.cc; path = ../../CsonppTest.cc; sourceTree = "<group>"; };
+		691BDF241A08C5DC0003A389 /* TestMain.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TestMain.cc; path = ../../TestMain.cc; sourceTree = "<group>"; };
+		6945D9451A08C40A0040DAE1 /* csonpptest */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = csonpptest; sourceTree = BUILT_PRODUCTS_DIR; };
+		6945D9551A08C4E10040DAE1 /* gmock.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = gmock.xcodeproj; path = ../../../../3rdparty/gmock/xcode/gmock/gmock.xcodeproj; sourceTree = "<group>"; };
+		6945D95B1A08C4F40040DAE1 /* csonpp.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = csonpp.xcodeproj; path = ../../../../xcode/csonpp/csonpp.xcodeproj; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		6945D9421A08C40A0040DAE1 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				691BDF331A08C6A10003A389 /* libcsonpp.a in Frameworks */,
+				691BDF341A08C6A10003A389 /* libgmock.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		691BDF221A08C5CE0003A389 /* tests */ = {
+			isa = PBXGroup;
+			children = (
+				691BDF231A08C5DC0003A389 /* CsonppTest.cc */,
+				691BDF241A08C5DC0003A389 /* TestMain.cc */,
+			);
+			name = tests;
+			sourceTree = "<group>";
+		};
+		6945D93C1A08C40A0040DAE1 = {
+			isa = PBXGroup;
+			children = (
+				691BDF221A08C5CE0003A389 /* tests */,
+				6945D95B1A08C4F40040DAE1 /* csonpp.xcodeproj */,
+				6945D9551A08C4E10040DAE1 /* gmock.xcodeproj */,
+				6945D9461A08C40A0040DAE1 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		6945D9461A08C40A0040DAE1 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				6945D9451A08C40A0040DAE1 /* csonpptest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		6945D9561A08C4E10040DAE1 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				6945D95A1A08C4E20040DAE1 /* libgmock.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		6945D95C1A08C4F40040DAE1 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				6945D9601A08C4F40040DAE1 /* libcsonpp.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		6945D9441A08C40A0040DAE1 /* csonpptest */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6945D94C1A08C40A0040DAE1 /* Build configuration list for PBXNativeTarget "csonpptest" */;
+			buildPhases = (
+				6945D9411A08C40A0040DAE1 /* Sources */,
+				6945D9421A08C40A0040DAE1 /* Frameworks */,
+				6945D9431A08C40A0040DAE1 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = csonpptest;
+			productName = csonpptest;
+			productReference = 6945D9451A08C40A0040DAE1 /* csonpptest */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		6945D93D1A08C40A0040DAE1 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0610;
+				ORGANIZATIONNAME = myjfm;
+				TargetAttributes = {
+					6945D9441A08C40A0040DAE1 = {
+						CreatedOnToolsVersion = 6.1;
+					};
+				};
+			};
+			buildConfigurationList = 6945D9401A08C40A0040DAE1 /* Build configuration list for PBXProject "csonpptest" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 6945D93C1A08C40A0040DAE1;
+			productRefGroup = 6945D9461A08C40A0040DAE1 /* Products */;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 6945D95C1A08C4F40040DAE1 /* Products */;
+					ProjectRef = 6945D95B1A08C4F40040DAE1 /* csonpp.xcodeproj */;
+				},
+				{
+					ProductGroup = 6945D9561A08C4E10040DAE1 /* Products */;
+					ProjectRef = 6945D9551A08C4E10040DAE1 /* gmock.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				6945D9441A08C40A0040DAE1 /* csonpptest */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		6945D95A1A08C4E20040DAE1 /* libgmock.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libgmock.a;
+			remoteRef = 6945D9591A08C4E20040DAE1 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		6945D9601A08C4F40040DAE1 /* libcsonpp.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libcsonpp.a;
+			remoteRef = 6945D95F1A08C4F40040DAE1 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
+/* Begin PBXSourcesBuildPhase section */
+		6945D9411A08C40A0040DAE1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				691BDF261A08C5DC0003A389 /* TestMain.cc in Sources */,
+				691BDF251A08C5DC0003A389 /* CsonppTest.cc in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		6945D94A1A08C40A0040DAE1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		6945D94B1A08C40A0040DAE1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		6945D94D1A08C40A0040DAE1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SRCROOT)/../../../../3rdparty/gmock/include",
+					"$(SRCROOT)/../../../../3rdparty/gmock/gtest/include",
+					"$(SRCROOT)/../../../",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		6945D94E1A08C40A0040DAE1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SRCROOT)/../../../../3rdparty/gmock/include",
+					"$(SRCROOT)/../../../../3rdparty/gmock/gtest/include",
+					"$(SRCROOT)/../../../",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		6945D9401A08C40A0040DAE1 /* Build configuration list for PBXProject "csonpptest" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6945D94A1A08C40A0040DAE1 /* Debug */,
+				6945D94B1A08C40A0040DAE1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		6945D94C1A08C40A0040DAE1 /* Build configuration list for PBXNativeTarget "csonpptest" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6945D94D1A08C40A0040DAE1 /* Debug */,
+				6945D94E1A08C40A0040DAE1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 6945D93D1A08C40A0040DAE1 /* Project object */;
+}
