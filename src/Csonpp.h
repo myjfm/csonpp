@@ -38,7 +38,7 @@ public:
   Object(Object&& irrOther);
 
   Object& operator=(const Object& irOther);
-  Object& operator=(const Object&& irrOther);
+  Object& operator=(Object&& irrOther);
   
   // find element matching irKey, or insert with default Value
   Value& operator[](const std::string& irKey);
