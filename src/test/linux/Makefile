@@ -34,7 +34,7 @@ realclean :
 	rm -rf $(SH_LIB_NAME)
 
 $(TEST) : $(OBJS)
-	$(CXX) $(REAL_LDFLAGS) -o $(TEST) $(OBJS) $(GMOCK_LIB) $(CSONPP_LIB)
+	$(CXX) -o $(TEST) $(OBJS) $(GMOCK_LIB) $(CSONPP_LIB) $(REAL_LDFLAGS)
 
 others : 
 	mkdir -p $(OUTPUT_PATH)
