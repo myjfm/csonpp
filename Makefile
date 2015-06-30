@@ -24,7 +24,7 @@ SH_LIB_MAKE_CMD		= $(CXX) -shared -D_REENTRANT -Wl,-soname,$(SH_LIB_MINOR_NAME) 
 ST_LIB_NAME			= $(OUTPUT_PATH)/$(LIB_NAME).$(ST_LIB_SUFFIX)
 ST_LIB_MAKE_CMD		= ar rcs $(ST_LIB_NAME)
 
-OBJS				= $(OUTPUT_PATH)/CsonppImpl.o
+OBJS				= $(OUTPUT_PATH)/csonpp_impl.o
 
 .PHONY : everything clean realclean all
 
@@ -53,6 +53,6 @@ $(SH_LIB_NAME) : $(OBJS)
 others : 
 	mkdir -p $(OUTPUT_PATH)
 
-$(OUTPUT_PATH)/CsonppImpl.o : src/private/CsonppImpl.cc
+$(OUTPUT_PATH)/csonpp_impl.o : src/private/csonpp_impl.cc
 	$(CXX) --std=c++11 $(REAL_CPPFLAGS) -c -o $@ $<
 
